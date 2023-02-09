@@ -16,10 +16,19 @@
                 <textarea class="form-control" id="inputbox" rows="10" placeholder="Copy paste the text here"></textarea>
             </div>
             
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label for="choosefile"></label>
                 <input type="file" class="form-control-file" id="choosefile">
-            </div>
+            </div> -->
+
+            <form method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                  <label for="choosefile">Choose File:</label>
+                  <input type="file" class="form-control-file" id="choosefile" name="file">
+                </div>
+                <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+            </form>
+
 
             <div class="form-check">
                 <button type="submit" class="btn btn-primary">Submit</button>
