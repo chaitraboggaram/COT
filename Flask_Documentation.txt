@@ -1,0 +1,9 @@
+Create a new file called 'app.py'
+
+Create a folder called templates, This is where you will store your HTML templates.
+In the templates folder, create a new file called home.html 
+
+Write the code in home.html and run the app.py file.
+
+To access the localhost --> http://127.0.0.1:5000
+

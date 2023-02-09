@@ -1,0 +1,6 @@
+# Upgrading ensurepip (a bootstrapping pip installer)
+python -m ensurepip --upgrade
+
+# Install flask
+pip install Flask
+
