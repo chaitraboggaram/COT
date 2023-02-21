@@ -1,28 +1,27 @@
-from flask import Flask, render_template
+from flask import Flask, request, render_template
+import difflib
 
 app = Flask(__name__)
 
-@app.route("/", methods=["GET", "POST"])
+@app.route('/')
 def index():
-    if request.method == "POST":
-        file = request.files["file"]
-        # Do something with the file (e.g. save it to disk)
-        return "File uploaded successfully"
-    return """
-        <form method="post" enctype="multipart/form-data">
-          <div class="form-group">
-            <label for="choosefile">Choose File:</label>
-            <input type="file" class="form-control-file" id="choosefile" name="file">
-          </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-    """
+    return render_template('home.html')
 
-@app.route("/home")
-def home():
-    return render_template("home.html")
+@app.route('/check', methods=['POST'])
+def check():
+    text = request.form['text']
+    if not text:
+        return render_template('home.html')
+    text_lines = text.splitlines()
+    with open('original_text.txt') as f:
+        original_text_lines = f.read().splitlines()
+    s = difflib.SequenceMatcher(None, original_text_lines, text_lines)
+    ratio = s.ratio()
+    if ratio > 0.5:
+        results = f'This text is {ratio*100:.2f}% similar to the original text'
+    else:
+        results = 'This text is not plagiarized'
+    return render_template('home.html', results=results)
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run(debug=True)
-
-

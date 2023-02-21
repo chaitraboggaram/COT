@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Plagiarism Checker</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="d-flex justify-content-center">
+        <form method="POST" action="/check">
+          <div class="form-group row">
+            <label for="text" class="col-md-2 col-form-label">Enter text:</label>
+            <div class="col-md-6">
+              <textarea class="form-control rounded-lg border-0 shadow-lg" name="text" rows="5"></textarea>
+            </div>
+            <div class="col-md-4">
+              <input type="submit" value="Check" class="btn btn-primary">
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    {% if results %}
+      <h2>Results:</h2>
+      <p>{{ results }}</p>
+    {% endif %}
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  </body>
+</html>
