@@ -17,54 +17,26 @@
         <!-- <link rel="stylesheet" href="static/navbar.css"> -->
     </head>
     <body>
-        <!-- <nav>
-            <ul>
-                <li><a href="#"><img src="static/COT.PNG" alt="Logo" width="75" height="50"></a></li>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </nav> -->
-        <!-- <nav class="navbar navbar-expand-lg navbar-light bg-which">
-            <a class="navbar-brand" href="#"><img src="static/COT.PNG" alt="Logo" width="75" height="50"></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            
-            <div class="collapse navbar-collapse" id="navbarNav">
-              <ul class="navbar-nav">
-                <li class="nav-item active">
-                  <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">About</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Contact</a>
-                </li>
-              </ul>
-            </div>
-          </nav> -->
         <div>
-          <div class="pos-f-t">
-            
-            <div class="collapse" id="navbarToggleExternalContent">
+            <div class="pos-f-t">
+                <div class="collapse" id="navbarToggleExternalContent">
+                    <div class="bg-dark p-4">
+                        <h4 class="text-white">Collapsed content</h4>
+                        <span class="text-muted">Toggleable via the navbar brand.</span>
+                    </div>
+                </div>
                 
-              <div class="bg-dark p-4">
-                <h4 class="text-white">Collapsed content</h4>
-                <span class="text-muted">Toggleable via the navbar brand.</span>
-              </div>
+                <nav class="navbar navbar-dark bg-dark">
+                    <img src="static/logo2.PNG" alt="Logo" width="50" height="50">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </nav>
             </div>
-            <nav class="navbar navbar-dark bg-dark">
-                <img src="static/logo2.PNG" alt="Logo" width="50" height="50">
-              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-            </nav>
-          </div>
         </div>
 
         <form>
+            <div class="row mb-4"></div>
             <div class="form-group">
                 <h1 class="_3xWts-title">Plagiarism Checker by&nbsp;COT</h1>
                 <div class="_3xzOp-subtitle">Plagiarism checker by COT detects plagiarism in your text.</div>   
@@ -72,88 +44,33 @@
 
             <div class="vjanh-checkBlock">
                 <div class="_1tx-t-checkTextBlock">
-                    <div class="_2AvRE-featuresColumn">
-                        <div class="_3MpM--item">
-                            <img data-src="https://static.grammarly.com/assets/files/7c826e77d9a2866520c4e196e32c7407/catch_plagiarism.svg" class="_3Xcku-icon lazyloaded" alt="" width="175" height="159" src="https://static.grammarly.com/assets/files/7c826e77d9a2866520c4e196e32c7407/catch_plagiarism.svg">
-                            <div class="_12UoT-title">
-                                <span>Catch plagiarism from ProQuest databases and over 16 billion web&nbsp;pages.</span>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="row mb-4"></div>
+                    <div class="row mb-4"></div>
                     <div class="_2UyJJ-wrapper">
                         <div class="O6L3v-checkText">
-                            <div class="_30TK9-textarea">
-                                <textarea class="form-control rounded-lg border-0 shadow-lg" name="textbox" rows="10" cols="10" placeholder="Upload a .txt or .doc file or copy paste the text to the box"></textarea><br>
+                            <div class="_30TK9-textarea"><div class="row justify-content-center">
+                                <textarea class="form-control rounded-lg border-0 shadow-lg" name="textbox" rows="10" cols="10" placeholder="Upload a .txt or .doc file or copy paste the text to the box"></textarea>
                                 <!-- <textarea class="_3CFUF-el" spellcheck="false" placeholder="Enter text or upload file to check for plagiarism and writing errors." aria-label="Enter text or upload file to check for plagiarism and writing errors." data-qa="textarea" data-gramm="false" wt-ignore-input="true" data-quillbot-element="cmtmcsoN1lYbWmIYxZeWj"></textarea> -->
                             </div>
-                            <div class="_1MNWm-buttonsContainer">
-                                <button class="_2vXY_-basic _3Y7Vy-sizeLarge _2Vu_8-fontWeightBold _2O_7o-colorGreen" type="button" data-qa="btnCheckText" data-cy="button-component">
-                                    <span class="_1vpLY-content">
-                                        <span class="o9viu-text">Scan for plagiarism</span>
-                                    </span>
-                                </button>
-                                <form id="file-upload-form" enctype="multipart/form-data">
-                                    <button class="_2vXY_-basic _3Y7Vy-sizeLarge _2Vu_8-fontWeightBold _3lOe7-colorGhost _3255a-uploadButton" type="button" data-cy="button-component">
-                                        <span class="_1vpLY-content">
-                                            <span class="_3QKd4-leftIconWrapper">
-                                                <svg width="20" height="21" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                                    <title>Upload</title>
-                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="m10 .793 4.854 4.854a.5.5 0 0 1-.708.707L10.5 2.707V15.5a.5.5 0 0 1-1 0V2.707L5.854 6.354a.5.5 0 1 1-.708-.707L10 .793zM1 16a.5.5 0 0 1 .5.5v2A1.5 1.5 0 0 0 3 20h14a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 1 1 1 0v2A2.5 2.5 0 0 1 17 21H3a2.5 2.5 0 0 1-2.5-2.5v-2A.5.5 0 0 1 1 16z" fill="#646B81"></path>
-                                                </svg>
-                                            </span>
-                                            <span class="o9viu-text">Upload a file</span>
-                                        </span>
-                                    </button>
-                                    <input type="file" class="_3s8Gi-input" name="source_file">
-                                </form>
+                        </div>
+
+                        <div class="row mb-4"></div>
+                        <form method="post" enctype="multipart/form-data">
+                            <div class="row justify-content-center">
+                                <div class="row justify-content-center">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <input type="file" class="form-control-file" id="choosefile" name="file">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="_2AvRE-featuresColumn">
-                        <div class="_3MpM--item">
-                            <img data-src="https://static.grammarly.com/assets/files/0a42e8e4258cc97e98c8b08968e33476/grammar_feedback.svg" class="_3Xcku-icon lazyloaded" alt="" width="175" height="180" src="https://static.grammarly.com/assets/files/0a42e8e4258cc97e98c8b08968e33476/grammar_feedback.svg">
-                            <div class="_12UoT-title">Get feedback on grammar, punctuation, vocabulary, and sentence structure.</div>
-                        </div>
+                        </form>
                     </div>
                 </div>
-                <div class="_1lpYw-featuresBlock">
-                    <div class="_3MpM--item _1jJ_X-horisontal">
-                        <img data-src="https://static.grammarly.com/assets/files/7c826e77d9a2866520c4e196e32c7407/catch_plagiarism.svg" class="_3Xcku-icon ls-is-cached lazyloaded" alt="" width="90" height="83" src="https://static.grammarly.com/assets/files/7c826e77d9a2866520c4e196e32c7407/catch_plagiarism.svg">
-                        <div class="_3LIxk-titleHorisontal">
-                            <span>Catch plagiarism from ProQuest databases and over 16 billion web&nbsp;pages.</span>
-                        </div>
-                    </div>
-                    <div class="_3MpM--item _1jJ_X-horisontal">
-                        <img data-src="https://static.grammarly.com/assets/files/0a42e8e4258cc97e98c8b08968e33476/grammar_feedback.svg" class="_3Xcku-icon ls-is-cached lazyloaded" alt="" width="84" height="82" src="https://static.grammarly.com/assets/files/0a42e8e4258cc97e98c8b08968e33476/grammar_feedback.svg">
-                        <div class="_3LIxk-titleHorisontal">Get feedback on grammar, punctuation, vocabulary, and sentence structure.</div>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group row">
-            <div class="col-md-6">
-                <textarea class="form-control rounded-lg border-0 shadow-lg" name="text" rows="10" cols="50" placeholder="Upload a .txt or .doc file or copy paste the text to the box"></textarea><br>
-            </div>
-            </div>
-
-            <!-- <div class="form-group">
-                <label for="choosefile"></label>
-                <input type="file" class="form-control-file" id="choosefile">
-            </div> -->
-
-            <form method="post" enctype="multipart/form-data">
-                <div class="form-group">
-                  <label for="choosefile">Choose File:</label>
-                  <input type="file" class="form-control-file" id="choosefile" name="file">
-                </div>
-                <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
-            </form>
-
-
-            <div class="form-check">
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-            
-          </form>
+            </div>                        
+        </form>
     </body>
 </html>
 
