@@ -1,31 +1,52 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Plagiarism Checker</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-  </head>
-  <body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <!-- Container wrapper -->
     <div class="container">
-      <div class="d-flex justify-content-center">
-        <form method="POST" action="/check">
-          <div class="form-group row">
-            <label for="text" class="col-md-2 col-form-label">Enter text:</label>
-            <div class="col-md-6">
-              <textarea class="form-control rounded-lg border-0 shadow-lg" name="text" rows="5"></textarea>
-            </div>
-            <div class="col-md-4">
-              <input type="submit" value="Check" class="btn btn-primary">
-            </div>
-          </div>
-        </form>
+      <!-- Navbar brand -->
+      <a class="navbar-brand me-2" href="https://mdbgo.com/">
+        <img src="static/COT.PNG" alt="Logo" width="75" height="50"/>
+      </a>
+  
+      <!-- Toggle button -->
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-mdb-toggle="collapse"
+        data-mdb-target="#navbarButtonsExample"
+        aria-controls="navbarButtonsExample"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <i class="fas fa-bars"></i>
+      </button>
+  
+      <!-- Collapsible wrapper -->
+      <div class="collapse navbar-collapse" id="navbarButtonsExample">
+        <!-- Left links -->
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Dashboard</a>
+          </li>
+        </ul>
+        <!-- Left links -->
+  
+        <div class="d-flex align-items-center">
+          <button type="button" class="btn btn-link px-3 me-2">
+            Login
+          </button>
+          <button type="button" class="btn btn-primary me-3">
+            Sign up for free
+          </button>
+          <a
+            class="btn btn-dark px-3"
+            href="https://github.com/mdbootstrap/mdb-ui-kit"
+            role="button"
+            ><i class="fab fa-github"></i
+          ></a>
+        </div>
       </div>
+      <!-- Collapsible wrapper -->
     </div>
-    {% if results %}
-      <h2>Results:</h2>
-      <p>{{ results }}</p>
-    {% endif %}
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-  </body>
-</html>
+    <!-- Container wrapper -->
+  </nav>
+  <!-- Navbar -->
