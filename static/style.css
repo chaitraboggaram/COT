@@ -37,6 +37,10 @@
     /* width: 100%; */
 }
 
+.bg-dark {
+  background-color: #000000!important;
+}
+
 nav ul {
     list-style-type: none;
     margin: 0;
