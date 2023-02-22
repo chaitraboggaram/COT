@@ -35,7 +35,10 @@ def upload():
     new_path = os.path.join(app.static_folder, new_filename)
     os.rename(old_path, new_path)
 
-    return 'File uploaded successfully'
+    message = 'File upload successful!'
+    # return render_template('index.html', message=message)
+    return render_template('alert.html', message=message)
+
 
 @app.route('/rename-file')
 def rename_file():
