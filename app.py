@@ -7,6 +7,7 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
+
 @app.route('/upload', methods=['POST'])
 def upload():
     # Get the file from the form
@@ -63,7 +64,6 @@ def upload():
             return render_template('alert.html', message=message)
 
 
-
 @app.route('/about')
 def about():
     return render_template('about.html')
@@ -73,10 +73,16 @@ def about():
 def privacy():
     return render_template('privacy.html')
 
+
 @app.route('/terms')
 def terms():
     return render_template('terms_and_conditions.html')
 
+
+@app.route("/chart")
+def chart():
+    data = [50, 50]
+    return render_template("chart.html", data=data)
 
 
 if __name__ == '__main__':
