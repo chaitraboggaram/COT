@@ -17,11 +17,11 @@
                     <div class="_30TK9-textarea"><div class="row justify-content-center">
                         &nbsp;&nbsp;
                         <img src="static/check.png" alt="Check" width="250" height="250">
-                        <!-- <div class="col-md-1"></div> -->
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <textarea class="form-control rounded-lg border-0 shadow-lg" name="textbox" rows="10" cols="10" placeholder="Upload a .txt or .doc file or copy paste the text to the box"></textarea>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <!-- <div class="col-md-1"></div> -->
+                        <form method="POST" action="/save">
+                            <textarea class="form-control rounded-lg border-0 shadow-lg" name="textbox" rows="10" cols="10" placeholder="Upload a .txt or .docx file or copy paste the text to the box"></textarea>
+                        </form>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <img src="static/doc_check.png" alt="DocCheck" width="250" height="250">
                         &nbsp;&nbsp;
                     </div>
