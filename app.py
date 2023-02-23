@@ -20,13 +20,6 @@ def upload():
         message = "Error! No file or text provided"
         return render_template('alert.html', message=message)
 
-   
-    # If file1.txt exist open it else create a file1.txt
-    with open('static/file1.txt', 'w') as f:
-        f.write(str(text))
-        message = "Content submittion successful!"
-        return render_template('alert.html', message=message)
-
     # Save the uploaded file
     if file:
         # Save the file to the static folder
@@ -54,14 +47,13 @@ def upload():
         # return render_template('index.html', message=message)
         return render_template('alert.html', message=message)
 
+    else:
+        # If file1.txt exist open it else create a file1.txt
+        with open('static/file1.txt', 'w') as f:
+            f.write(str(text))
+            message = "Content submittion successful!"
+            return render_template('alert.html', message=message)
 
-# @app.route('/save', methods=['POST'])
-# def save():
-#     content = request.form['content']
-#     with open('saved_content.txt', 'w') as f:
-#         f.write(content)
-#     message = "Content submittion successful!"
-#     return render_template('alert.html', message=message)
 
 
 @app.route('/about')
