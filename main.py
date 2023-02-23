@@ -7,7 +7,6 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-
 @app.route('/upload', methods=['POST'])
 def upload():
     # Get the file from the form
@@ -15,18 +14,25 @@ def upload():
 
     # Get textbox from the form
     text = request.form.get('textbox')
-    print(text)
-    
+
     # Checking if content is available for checking
     if not file and not text:
         message = "Error! No file or text provided"
         return render_template('alert.html', message=message)
 
-    # Save the uploaded file
+    # If file is uploaded
     if file:
-        # Save the file to the static folder
         filename = file.filename
         old_path = os.path.join(app.static_folder, filename)
+        doc_path = os.path.join(app.static_folder, 'file1.docx')
+        text_path = os.path.join(app.static_folder, 'file1.txt')
+
+        if os.path.isfile(doc_path):
+            os.remove(doc_path)
+        if os.path.isfile(text_path):
+            os.remove(text_path)
+
+        # Save the file to the static folder
         file.save(os.path.join(app.static_folder, filename))
 
         # Getting the file extension
@@ -52,10 +58,10 @@ def upload():
     else:
         # If file1.txt exist open it else create a file1.txt
         with open('static/file1.txt', 'w') as f:
-            # data = None
             f.write(str(text))
             message = "Content submittion successful!"
             return render_template('alert.html', message=message)
+
 
 
 @app.route('/about')
@@ -66,7 +72,6 @@ def about():
 @app.route('/privacy')
 def privacy():
     return render_template('privacy.html')
-
 
 @app.route('/terms')
 def terms():

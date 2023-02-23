@@ -20,11 +20,19 @@ def upload():
         message = "Error! No file or text provided"
         return render_template('alert.html', message=message)
 
-    # Save the uploaded file
+    # If file is uploaded
     if file:
-        # Save the file to the static folder
         filename = file.filename
         old_path = os.path.join(app.static_folder, filename)
+        doc_path = os.path.join(app.static_folder, 'file1.docx')
+        text_path = os.path.join(app.static_folder, 'file1.txt')
+
+        if os.path.isfile(doc_path):
+            os.remove(doc_path)
+        if os.path.isfile(text_path):
+            os.remove(text_path)
+
+        # Save the file to the static folder
         file.save(os.path.join(app.static_folder, filename))
 
         # Getting the file extension
