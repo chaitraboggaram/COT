@@ -92,7 +92,63 @@ nav ul {
   box-shadow: 0 0 10px rgba(0,0,0,0.3);
   text-align: center;
 }
+
 /* The blurry effect */
 body.blur {
   filter: blur(5px);
+}
+
+a {
+  color: rgb(0, 0, 0) !important; /* or any color of your choice */
+  text-decoration: none !important;
+}
+
+a:hover {
+  color: rgb(0, 0, 0) !important; /* or any color of your choice */
+  text-decoration: none !important;
+}
+
+a:focus, a:active {
+  outline: none !important;
+}
+
+nav a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #000 !important;
+}
+
+a {
+  color: #000000 !important;
+  text-decoration: none !important;
+  background-color: transparent !important;
+}
+
+a:hover {
+  color:#000000 !important;
+  text-decoration:underline !important;
+}
+
+a:not([href]):not([class]) {
+  color:inherit !important;
+  text-decoration:none !important;
+}
+
+a:not([href]):not([class]):hover {
+  color:inherit !important;
+  text-decoration:none !important;
+}
+
+.navbar {
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 0 !important;
 }

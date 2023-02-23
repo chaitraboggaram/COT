@@ -29,8 +29,9 @@ def upload():
     elif file_extension == ".txt":
         new_filename = r'file1.txt'
     else:
-        message = 'Choose .txt or .doc file'
-        return render_template('index.html', message=message)
+        message = 'File format not accepted. Choose .txt or .docx file'
+        os.remove(old_path)
+        return render_template('alert.html', message=message)
 
     new_path = os.path.join(app.static_folder, new_filename)
     os.rename(old_path, new_path)
@@ -54,6 +55,20 @@ def rename_file():
     os.rename(old_path, new_path)
 
     return 'File renamed successfully'
+
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+
+@app.route('/privacy')
+def privacy():
+    return render_template('privacy.html')
+
+@app.route('/terms')
+def terms():
+    return render_template('terms_and_conditions.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
