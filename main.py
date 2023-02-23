@@ -7,24 +7,19 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
+
 @app.route('/upload', methods=['POST'])
 def upload():
-    if 'file' not in request.files and not request.form.get('text'):
-        if request.form.get('text') == "":
-            message = "Error! No file or text provided"
-            return render_template('alert.html', message=message)
-
     # Get the file from the form
     file = request.files['file']
 
     # Get textbox from the form
     text = request.form.get('textbox')
-
-        # If file1.txt exist open it else create a file1.txt
-    with open('static/file1.txt', 'w') as f:
-        # data = None
-        f.write(str(text))
-        message = "Content submittion successful!"
+    print(text)
+    
+    # Checking if content is available for checking
+    if not file and not text:
+        message = "Error! No file or text provided"
         return render_template('alert.html', message=message)
 
     # Save the uploaded file
@@ -54,14 +49,13 @@ def upload():
         # return render_template('index.html', message=message)
         return render_template('alert.html', message=message)
 
-
-# @app.route('/save', methods=['POST'])
-# def save():
-#     content = request.form['content']
-#     with open('saved_content.txt', 'w') as f:
-#         f.write(content)
-#     message = "Content submittion successful!"
-#     return render_template('alert.html', message=message)
+    else:
+        # If file1.txt exist open it else create a file1.txt
+        with open('static/file1.txt', 'w') as f:
+            # data = None
+            f.write(str(text))
+            message = "Content submittion successful!"
+            return render_template('alert.html', message=message)
 
 
 @app.route('/about')
@@ -72,6 +66,7 @@ def about():
 @app.route('/privacy')
 def privacy():
     return render_template('privacy.html')
+
 
 @app.route('/terms')
 def terms():
