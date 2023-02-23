@@ -153,12 +153,22 @@ a:not([href]):not([class]):hover {
   padding: 0 !important;
 }
 
-/* p {
-  font-size: 22px;
-} */
-
 p {
   padding-right: 50px;
   padding-left: 50px;
   font-size: 22px;
+}
+
+h6 {
+  padding-right: 50px;
+  padding-left: 50px;
+  font-size: 12px;
+}
+
+footer {
+  bottom: 0;
+  width: 100%;
+  padding: 10px !important;
+  background-color: #343a40;
+  color: #fff;
 }

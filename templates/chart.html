@@ -39,8 +39,8 @@
                 <div class="container-fluid d-flex justify-content-center">
                     <div class="col-sm-8 col-md-6">
                         <div class="card">
-                            <div class="card-header">Plagiarism Results</div>
-                            <div class="card-body" style="height: 420px">
+                            <div class="card-header"><b>Plagiarism Results</b></div>
+                            <div class="card-body" style="height: 500px">
                                 <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
                                     <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
                                         <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
@@ -52,9 +52,13 @@
                             </div>
                         </div>
                     </div>
+                    <a href="{{ url_for('aboutplagiarism') }}">Know more about Plagiarism</a>
                 </div>
             </div>
         </div>
     </div>
 </form>
+<br>
+<br>
+
 {% endblock %}

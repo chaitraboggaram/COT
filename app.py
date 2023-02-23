@@ -81,9 +81,18 @@ def terms():
 
 @app.route("/chart")
 def chart():
-    data = [50, 50]
+    data = [30, 70]
     return render_template("chart.html", data=data)
 
+
+@app.route("/teamcot")
+def teamcot():
+    return render_template("teamcot.html")
+
+
+@app.route("/aboutplagiarism")
+def aboutplagiarism():
+    return render_template("aboutplagiarism.html")
 
 if __name__ == '__main__':
     app.run(debug=True)
