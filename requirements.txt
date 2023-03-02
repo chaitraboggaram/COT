@@ -19,3 +19,7 @@ pip install nltk
 # Install python docx to write docx as txt file
 pip install python-docx
 
+# To add evirnment variables
+pip install python-dotenv
+
+# Make sure you create .env file in the root directory and create the OPEN AI secret key. Save the key as OPENAI_KEY

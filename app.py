@@ -8,8 +8,12 @@ nltk.download('punkt')
 from nltk.tokenize import sent_tokenize
 from docx import Document
 import re
+from dotenv import load_dotenv
 
 app = Flask(__name__)
+
+load_dotenv()
+SECRET_KEY = os.getenv('OPENAI_KEY')
 
 data = ""
 highlighted_content = ""
@@ -202,7 +206,7 @@ def chart():
             text = file.read()
 
         #invoke openAI api
-        openai.api_key = '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'
+        openai.api_key = SECRET_KEY
         
         # Tokenize the text into sentences
         sentences = sent_tokenize(text)
