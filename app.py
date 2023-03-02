@@ -10,9 +10,9 @@ from docx import Document
 import re
 
 app = Flask(__name__)
-new_path = ""
-result = ""
-plagiarism_result = ""
+
+data = ""
+highlighted_content = ""
 
 @app.route('/')
 def index():
@@ -43,6 +43,8 @@ def upload():
             os.remove(doc_path)
         if os.path.isfile(text_path):
             os.remove(text_path)
+        if os.path.isfile(os.path.join(app.static_folder, 'logic.txt')):
+            os.remove(os.path.join(app.static_folder, 'logic.txt'))
 
         # Save the file to the static folder
         file.save(os.path.join(app.static_folder, filename))
@@ -95,6 +97,9 @@ def upload():
 
 @app.route("/check")
 def check():
+    global data
+    global highlighted_content
+
     sample_files = [doc for doc in os.listdir(app.static_folder) if doc.endswith('.txt')]
 
     # Read all files into a list
@@ -162,73 +167,80 @@ def check():
 
 @app.route("/chart")
 def chart():
-    global result
+    global data
+    global highlighted_content
 
-    # Removing the files created by chatGPT
-    chatGPT_file1_path = os.path.join(app.static_folder, 'chatGPT_file1.txt')
-    chatGPT_file2_path = os.path.join(app.static_folder, 'chatGPT_file2.txt')
-    chatGPT_file3_path = os.path.join(app.static_folder, 'chatGPT_file3.txt')
-    chatGPT_file4_path = os.path.join(app.static_folder, 'chatGPT_file4.txt')
-    chatGPT_file5_path = os.path.join(app.static_folder, 'chatGPT_file5.txt')
-    
-    if os.path.isfile(chatGPT_file1_path):
-        os.remove(chatGPT_file1_path)
+    if os.path.isfile(os.path.join(app.static_folder, 'logic.txt')):
+        return render_template("chart.html", data=data, content=highlighted_content)
+    else: 
+        # Removing the files created by chatGPT
+        chatGPT_file1_path = os.path.join(app.static_folder, 'chatGPT_file1.txt')
+        chatGPT_file2_path = os.path.join(app.static_folder, 'chatGPT_file2.txt')
+        chatGPT_file3_path = os.path.join(app.static_folder, 'chatGPT_file3.txt')
+        chatGPT_file4_path = os.path.join(app.static_folder, 'chatGPT_file4.txt')
+        chatGPT_file5_path = os.path.join(app.static_folder, 'chatGPT_file5.txt')
         
-    if os.path.isfile(chatGPT_file2_path):
-        os.remove(chatGPT_file2_path)
+        if os.path.isfile(chatGPT_file1_path):
+            os.remove(chatGPT_file1_path)
+            
+        if os.path.isfile(chatGPT_file2_path):
+            os.remove(chatGPT_file2_path)
 
-    if os.path.isfile(chatGPT_file3_path):
-        os.remove(chatGPT_file3_path)
+        if os.path.isfile(chatGPT_file3_path):
+            os.remove(chatGPT_file3_path)
 
-    if os.path.isfile(chatGPT_file4_path):
-        os.remove(chatGPT_file4_path)
+        if os.path.isfile(chatGPT_file4_path):
+            os.remove(chatGPT_file4_path)
 
-    if os.path.isfile(chatGPT_file5_path): 
-        os.remove(chatGPT_file5_path)
+        if os.path.isfile(chatGPT_file5_path): 
+            os.remove(chatGPT_file5_path)
 
-    new_path = os.path.join(app.static_folder, 'file1.txt')
+        new_path = os.path.join(app.static_folder, 'file1.txt')
 
-    #Read the uploaded file in the fold of static
-    with open(new_path, 'r') as file:
-        text = file.read()
+        #Read the uploaded file in the fold of static
+        with open(new_path, 'r') as file:
+            text = file.read()
 
-    #invoke openAI api
-    openai.api_key = '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'
-    
-    # Tokenize the text into sentences
-    sentences = sent_tokenize(text)
+        #invoke openAI api
+        openai.api_key = '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'
+        
+        # Tokenize the text into sentences
+        sentences = sent_tokenize(text)
 
-    # The first sentence is usually the title
-    title = sentences[0]
+        # The first sentence is usually the title
+        title = sentences[0]
 
-    # Pass the title as the prompt to OpenAI
-    prompt = f"Write an essay on '{title}'."
+        # Pass the title as the prompt to OpenAI
+        prompt = f"Write an essay on '{title}'."
 
-    # Call the completion API and get the response
-    for i in range(0, 2):
-        if i > 0:
-            prompt = f"Write an essay on '{title}, give a different content for this'."
+        # Call the completion API and get the response
+        for i in range(0, 2):
+            if i > 0:
+                prompt = f"Write an essay on '{title}, give a different content for this'."
 
-        var_name = f"var{i+1}"
+            var_name = f"var{i+1}"
 
-        response = openai.Completion.create(engine = 'text-davinci-003',
-                                            prompt = prompt,
-                                            max_tokens = 3000,
-                                            temperature = 0.5,
-                                            top_p = 1,
-                                            frequency_penalty = 0,
-                                            presence_penalty = 0
-                                            )
+            response = openai.Completion.create(engine = 'text-davinci-003',
+                                                prompt = prompt,
+                                                max_tokens = 3000,
+                                                temperature = 0.5,
+                                                top_p = 1,
+                                                frequency_penalty = 0,
+                                                presence_penalty = 0
+                                                )
 
-        var_name = response.choices[0].text.strip()
-        file_name = f"chatGPT_file{i+1}.txt"
-        file_path = 'static/' + file_name
-        with open(file_path, 'w') as f:
-        # with open('static/file2.txt', 'w') as f:
-            f.write(str(var_name))
-    data, highlighted_content = check()
+            var_name = response.choices[0].text.strip()
+            file_name = f"chatGPT_file{i+1}.txt"
+            file_path = 'static/' + file_name
+            with open(file_path, 'w') as f:
+                f.write(str(var_name))
+        data, highlighted_content = check()
 
-    return render_template("chart.html", data=data, content=highlighted_content)
+        with open(os.path.join(app.static_folder, 'logic.txt'), 'w') as f:
+            f.write("Logic created")
+
+        return render_template("chart.html", data=data, content=highlighted_content)
+
 
 @app.route('/about')
 def about():
