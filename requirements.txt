@@ -16,4 +16,6 @@ pip install bs4
 # Install nltk for title extraction
 pip install nltk
 
+# Install python docx to write docx as txt file
+pip install python-docx
 
