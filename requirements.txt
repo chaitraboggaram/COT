@@ -13,3 +13,7 @@ pip install openai
 # Install bs4
 pip install bs4
 
+# Install nltk for title extraction
+pip install nltk
+
+
