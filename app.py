@@ -7,6 +7,7 @@ import nltk
 nltk.download('punkt')
 from nltk.tokenize import sent_tokenize
 from docx import Document
+import re
 
 app = Flask(__name__)
 new_path = ""
@@ -93,104 +94,22 @@ def upload():
 
 
 @app.route("/check")
-# def check():
-#     sample_files = [doc for doc in os.listdir(app.static_folder) if doc.endswith('.txt')]
-#     sample_contents = [open(os.path.join(app.static_folder, file)).read() for file in sample_files]              
-
-#     vectorize = lambda Text: TfidfVectorizer().fit_transform(Text).toarray()    
-#     similarity = lambda doc1, doc2: cosine_similarity([doc1, doc2])             
-
-#     vectors = vectorize(sample_contents)
-#     s_vectors = list(zip(sample_files, vectors))
-
-#     plagiarism_result = set()
-
-#     for sample_a, text_vector_a in s_vectors:
-#         new_vectors = s_vectors.copy()
-#         current_index = new_vectors.index((sample_a, text_vector_a))
-#         del new_vectors[current_index]
-
-#         for sample_b, text_vector_b in new_vectors:
-#             similarity_score = round(similarity(text_vector_a, text_vector_b)[0][1], 4)
-#             sample_pair = sorted((sample_a, sample_b))
-#             score = sample_pair[0], sample_pair[1], similarity_score
-#             plagiarism_result.add(score)
-    
-#     max_scores = [(t[0], t[2]) for t in plagiarism_result if 'file1.txt' in t]
-#     max_score_val = max(plagiarism_result, key=lambda x: x[1])[1]
-#     max_file = max(max_scores, key=lambda x: x[1])[0]
-
-#     match_content_path =  os.path.join(app.static_folder, 'max_content.txt')
-
-#     if os.path.isfile(match_content_path):
-#         os.remove(match_content_path)
-
-#     with open(match_content_path, 'w') as f:
-#         f.write(str(max_file))
-
-#     max_content = "Hello"
-
-#     print("Max Score: " + str(max_score_val))
-#     print("\nMatching Content\n\n" + str(max_content))
-#     return plagiarism_result
-# def check():
-#     sample_files = [doc for doc in os.listdir(app.static_folder) if doc.endswith('.txt')]
-#     sample_contents = [open(os.path.join(app.static_folder, file)).read() for file in sample_files]              
-
-#     vectorize = lambda Text: TfidfVectorizer().fit_transform(Text).toarray()    
-#     similarity = lambda doc1, doc2: cosine_similarity([doc1, doc2])             
-
-#     vectors = vectorize(sample_contents)
-#     s_vectors = list(zip(sample_files, vectors))
-
-#     plagiarism_result = set()
-
-#     for sample_a, text_vector_a in s_vectors:
-#         new_vectors = s_vectors.copy()
-#         current_index = new_vectors.index((sample_a, text_vector_a))
-#         del new_vectors[current_index]
-
-#         for sample_b, text_vector_b in new_vectors:
-#             similarity_score = round(similarity(text_vector_a, text_vector_b)[0][1], 4)
-#             sample_pair = sorted((sample_a, sample_b))
-#             score = sample_pair[0], sample_pair[1], similarity_score
-#             plagiarism_result.add(score)
-
-#     max_score_val = max(plagiarism_result, key=lambda x: x[2])[2]
-#     max_files = [(t[0], t[1]) for t in plagiarism_result if t[2] == max_score_val]
-
-#     # Get matching content between max_files
-#     with open(os.path.join(app.static_folder, max_files[0][0])) as file1:
-#         file1_content = file1.read()
-#     with open(os.path.join(app.static_folder, max_files[0][1])) as file2:
-#         file2_content = file2.read()
-#     match_content = list(set(file1_content.split()) & set(file2_content.split()))
-    
-#     match_content_path =  os.path.join(app.static_folder, 'max_content.txt')
-
-#     if os.path.isfile(match_content_path):
-#         os.remove(match_content_path)
-
-#     with open(match_content_path, 'w') as f:
-#         f.write('\n'.join(match_content))
-
-#     return plagiarism_result
 def check():
     sample_files = [doc for doc in os.listdir(app.static_folder) if doc.endswith('.txt')]
 
-    # Define the vectorizer and fit it on all files
-    vectorizer = TfidfVectorizer()
-    corpus = []
-    for sample in sample_files:
-        with open(os.path.join(app.static_folder, sample)) as f:
-            content = f.read()
-            corpus.append(content)
-    vectorizer.fit(corpus)
+    # Read all files into a list
+    files_content = []
+    for sample_file in sample_files:
+        with open(os.path.join(app.static_folder, sample_file)) as f:
+            files_content.append(f.read())
 
-    # Get the content of file1.txt and transform it into a feature vector
+    # Define the vectorizer using the entire corpus of texts
+    vectorizer = TfidfVectorizer()
+    vectorizer.fit(files_content)
+
+    # Get the content of file1.txt
     with open(os.path.join(app.static_folder, 'file1.txt')) as file1:
         file1_content = file1.read()
-    file1_vector = vectorizer.transform([file1_content]).toarray()
 
     plagiarism_result = set()
 
@@ -203,11 +122,12 @@ def check():
         with open(os.path.join(app.static_folder, sample_b)) as file2:
             file2_content = file2.read()
 
-        # Transform the content of the current file into a feature vector using the same vocabulary
-        file2_vector = vectorizer.transform([file2_content]).toarray()
+        # Transform each individual text using the same vectorizer
+        file1_vec = vectorizer.transform([file1_content])
+        file2_vec = vectorizer.transform([file2_content])
 
         # Compute similarity score between file1.txt and the current file
-        similarity_score = round(cosine_similarity(file1_vector, file2_vector)[0][0], 4)
+        similarity_score = round(cosine_similarity(file1_vec, file2_vec)[0][0], 4)
 
         # Store the score and file names in the plagiarism_result set
         sample_pair = sorted(('file1.txt', sample_b))
@@ -225,17 +145,19 @@ def check():
         file2_content = file2.read()
     match_content = list(set(file1_content.split()) & set(file2_content.split()))
 
-    match_content_path = os.path.join(app.static_folder, 'max_content.txt')
-
-    if os.path.isfile(match_content_path):
-        os.remove(match_content_path)
-
-    with open(match_content_path, 'w') as f:
-        f.write('\n'.join(match_content))
-
-    return plagiarism_result
+    # Highlight the matched content in file1.txt
+    highlighted_content = file1_content
+    for match in match_content:
+        highlighted_content = re.sub(match, f'<mark >{match}</mark>', highlighted_content)
 
 
+    plagiarised_content = [t[2] for t in plagiarism_result if 'file1.txt' in t]
+    plagiarism_percent = round(max(plagiarised_content) * 100, 2)
+    non_plagiarism_percent = 100 - plagiarism_percent
+
+    data = [plagiarism_percent, non_plagiarism_percent]
+
+    return (data, highlighted_content)
 
 
 @app.route("/chart")
@@ -271,7 +193,7 @@ def chart():
         text = file.read()
 
     #invoke openAI api
-    openai.api_key = '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'
+    openai.api_key = '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'
     
     # Tokenize the text into sentences
     sentences = sent_tokenize(text)
@@ -304,16 +226,9 @@ def chart():
         with open(file_path, 'w') as f:
         # with open('static/file2.txt', 'w') as f:
             f.write(str(var_name))
-    results = check()
+    data, highlighted_content = check()
 
-    plagiarised_content = [t[2] for t in results if 'file1.txt' in t]
-    plagiarism_percent = round(max(plagiarised_content) * 100, 2)
-    non_plagirism_percent = 100 - plagiarism_percent
-
-    data = [plagiarism_percent, non_plagirism_percent]
-
-    return render_template("chart.html", data=data)
-
+    return render_template("chart.html", data=data, content=highlighted_content)
 
 @app.route('/about')
 def about():
