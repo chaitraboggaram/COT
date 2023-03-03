@@ -17,6 +17,7 @@ SECRET_KEY = os.getenv('OPENAI_KEY')
 
 data = ""
 highlighted_content = ""
+flag = 0
 
 @app.route('/')
 def index():
@@ -30,6 +31,9 @@ def upload():
 
     # Get textbox from the form
     text = request.form.get('textbox')
+
+    if os.path.isfile(os.path.join(app.static_folder, 'logic.txt')):
+        os.remove(os.path.join(app.static_folder, 'logic.txt'))
 
     # Checking if content is available for checking
     if not file and not text:
@@ -47,8 +51,6 @@ def upload():
             os.remove(doc_path)
         if os.path.isfile(text_path):
             os.remove(text_path)
-        if os.path.isfile(os.path.join(app.static_folder, 'logic.txt')):
-            os.remove(os.path.join(app.static_folder, 'logic.txt'))
 
         # Save the file to the static folder
         file.save(os.path.join(app.static_folder, filename))
@@ -157,7 +159,7 @@ def check():
     # Highlight the matched content in file1.txt
     highlighted_content = file1_content
     for match in match_content:
-        highlighted_content = re.sub(match, f'<mark >{match}</mark>', highlighted_content)
+        highlighted_content = re.sub(match, f'<mark style="background-color:green;">{match}</mark>', highlighted_content)
 
 
     plagiarised_content = [t[2] for t in plagiarism_result if 'file1.txt' in t]
@@ -173,31 +175,20 @@ def check():
 def chart():
     global data
     global highlighted_content
+    global flag
 
-    if os.path.isfile(os.path.join(app.static_folder, 'logic.txt')):
+    n = 10
+
+    # Checking flag so that the function calls are ot done while page is being refreshed
+    if flag == 1:        
         return render_template("chart.html", data=data, content=highlighted_content)
     else: 
         # Removing the files created by chatGPT
-        chatGPT_file1_path = os.path.join(app.static_folder, 'chatGPT_file1.txt')
-        chatGPT_file2_path = os.path.join(app.static_folder, 'chatGPT_file2.txt')
-        chatGPT_file3_path = os.path.join(app.static_folder, 'chatGPT_file3.txt')
-        chatGPT_file4_path = os.path.join(app.static_folder, 'chatGPT_file4.txt')
-        chatGPT_file5_path = os.path.join(app.static_folder, 'chatGPT_file5.txt')
-        
-        if os.path.isfile(chatGPT_file1_path):
-            os.remove(chatGPT_file1_path)
-            
-        if os.path.isfile(chatGPT_file2_path):
-            os.remove(chatGPT_file2_path)
-
-        if os.path.isfile(chatGPT_file3_path):
-            os.remove(chatGPT_file3_path)
-
-        if os.path.isfile(chatGPT_file4_path):
-            os.remove(chatGPT_file4_path)
-
-        if os.path.isfile(chatGPT_file5_path): 
-            os.remove(chatGPT_file5_path)
+        for i in range(0, n):
+            file_name = f"chatGPT_file{i+1}.txt"
+            file_path = os.path.join(app.static_folder, file_name)
+            if os.path.isfile(file_path):
+                os.remove(file_path)
 
         new_path = os.path.join(app.static_folder, 'file1.txt')
 
@@ -218,7 +209,7 @@ def chart():
         prompt = f"Write an essay on '{title}'."
 
         # Call the completion API and get the response
-        for i in range(0, 2):
+        for i in range(0, n):
             if i > 0:
                 prompt = f"Write an essay on '{title}, give a different content for this'."
 
@@ -240,8 +231,7 @@ def chart():
                 f.write(str(var_name))
         data, highlighted_content = check()
 
-        with open(os.path.join(app.static_folder, 'logic.txt'), 'w') as f:
-            f.write("Logic created")
+        flag = 1
 
         return render_template("chart.html", data=data, content=highlighted_content)
 
