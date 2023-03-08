@@ -26,6 +26,10 @@ def index():
 
 @app.route('/upload', methods=['POST'])
 def upload():
+    global flag
+
+    flag = 0
+    
     # Get the file from the form
     file = request.files['file']
 
@@ -177,7 +181,7 @@ def chart():
     global highlighted_content
     global flag
 
-    n = 10
+    n = 3
 
     # Checking flag so that the function calls are ot done while page is being refreshed
     if flag == 1:        
