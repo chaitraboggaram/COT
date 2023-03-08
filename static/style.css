@@ -172,3 +172,7 @@ footer {
   background-color: #343a40;
   color: #fff;
 }
+
+.modal-header.text-center h3.modal-title {
+  margin: 0 auto !important;
+}

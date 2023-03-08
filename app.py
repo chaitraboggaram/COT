@@ -28,8 +28,11 @@ def index():
 def upload():
     global flag
 
+    # Flag is used to manage the page refresh, when we refresh page
+    # flag = 0 --> Computation is done
+    # flag = 1 --> Computation is not done and only results is displayed
     flag = 0
-    
+
     # Get the file from the form
     file = request.files['file']
 
@@ -163,8 +166,8 @@ def check():
     # Highlight the matched content in file1.txt
     highlighted_content = file1_content
     for match in match_content:
-        highlighted_content = re.sub(match, f'<mark style="background-color:green;">{match}</mark>', highlighted_content)
-
+        if len(match) >= 3:
+            highlighted_content = re.sub(r'\b{}\b'.format(match), '<mark style="background-color:green;">{}</mark>'.format(match), highlighted_content)
 
     plagiarised_content = [t[2] for t in plagiarism_result if 'file1.txt' in t]
     plagiarism_percent = round(max(plagiarised_content) * 100, 2)
