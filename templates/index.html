@@ -20,15 +20,16 @@
                         &nbsp;&nbsp;
                         <img src="static/check.png" alt="Check" width="250" height="250">
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                 
-                        <textarea class="form-control rounded-lg border-0 shadow-lg" name="textbox" rows="10" cols="10" placeholder="Upload a .txt or .docx file or copy paste the text to the box"></textarea>
+                        <textarea class="form-control rounded-lg border-0 shadow-lg" name="textbox" rows="10" cols="10" placeholder="Upload a .txt or .docx file or copy paste the text to the box" maxlength="2000"></textarea>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <img src="static/doc_check.png" alt="DocCheck" width="250" height="250">
                         &nbsp;&nbsp;
                     </div>
                 </div>
                 <div class="row mb-4"></div>
-                <input type="file" name="file">
+                <input type="file" name="file" accept=".txt,.docx">
                 <input type="submit" value="Submit" class="btn btn-primary">
+                
             </div>
         </div>
     </div>

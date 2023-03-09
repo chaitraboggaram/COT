@@ -94,18 +94,25 @@ def upload():
 
             # Save the text to a txt file with UTF-8 encoding
             with open(txt_file_path, 'w', errors='ignore') as txt_file:
-            # with open(txt_file_path, 'w', encoding='utf-8') as txt_file:
                 txt_file.write(text)
 
+        # Counting the number of characters in file
+        with open("static/file1.txt", "r") as file:
+            content = file.read()
+            num_chars = len(content)
+            if num_chars > 2048:
+                message = 'File size is too big! Upload a file which has 2000 or less characters'
+                return render_template('alert.html', message=message)
+
         message = 'File upload successful!\n\nWait while we calculate the Plagiarism result.'
-        return render_template('alert.html', message=message)
+        return render_template('alerts.html', message=message)
 
     else:
         # If file1.txt exist open it else create a file1.txt
         with open('static/file1.txt', 'w') as f:
             f.write(str(text))
             message = "Content submittion successful!\n\nWait while we calculate the Plagiarism result."
-            return render_template('alert.html', message=message)
+            return render_template('alerts.html', message=message)
 
 
 @app.route("/check")
