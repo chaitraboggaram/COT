@@ -156,6 +156,14 @@ def check():
     max_score_val = max(plagiarism_result, key=lambda x: x[2])[2]
     max_files = [(t[0], t[1]) for t in plagiarism_result if t[2] == max_score_val]
 
+    plagiarised_content = [(t[1], t[2]) for t in plagiarism_result if 'file1.txt' in t]
+    max_plagiarism = max(plagiarised_content, key=lambda x: x[1])
+    max_plagiarism_value = max_plagiarism[1]
+    max_plagiarism_file = max_plagiarism[0]
+
+    with open(os.path.join(app.static_folder, max_plagiarism_file)) as f:
+        max_plagiarism_content = f.read()
+
     # Get matching content between max_files
     with open(os.path.join(app.static_folder, max_files[0][0])) as file1:
         file1_content = file1.read()
@@ -163,17 +171,18 @@ def check():
         file2_content = file2.read()
     match_content = list(set(file1_content.split()) & set(file2_content.split()))
 
-    # Highlight the matched content in file1.txt
-    highlighted_content = file1_content
-    for match in match_content:
-        if len(match) >= 3:
-            highlighted_content = re.sub(r'\b{}\b'.format(match), '<mark style="background-color:green;">{}</mark>'.format(match), highlighted_content)
-
-    plagiarised_content = [t[2] for t in plagiarism_result if 'file1.txt' in t]
-    plagiarism_percent = round(max(plagiarised_content) * 100, 2)
-    non_plagiarism_percent = 100 - plagiarism_percent
-
-    data = [plagiarism_percent, non_plagiarism_percent]
+    # Read max_plagiarism_content and highlight matching content in file1.txt
+    with open(os.path.join(app.static_folder, max_plagiarism_file)) as max_file:
+        max_plagiarism_content = max_file.read()
+        highlighted_content = ""
+        for line in file1_content.splitlines():
+            highlighted_line = line
+            for match in set(max_plagiarism_content.split()) & set(line.split()):
+                if len(match) >= 3:
+                    highlighted_line = re.sub(r'\b{}\b'.format(match), '<mark style="background-color:green;">{}</mark>'.format(match), highlighted_line)
+            highlighted_content += highlighted_line + "<br>"
+        
+    data = [round(max_plagiarism_value * 100, 2), round((1 - max_plagiarism_value) * 100, 2)]
 
     return (data, highlighted_content)
 
