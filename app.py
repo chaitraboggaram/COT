@@ -176,6 +176,8 @@ def check():
     plagiarised_percent = round(max_score_val, 2) * 100 + 30
     if plagiarised_percent >= 100:
         plagiarised_percent = 100
+    elif plagiarised_percent <= 50:
+        plagiarised_percent -= 30
     non_plagiarised_percent = 100 - plagiarised_percent
     data = [plagiarised_percent, non_plagiarised_percent]
 
