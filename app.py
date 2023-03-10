@@ -39,9 +39,6 @@ def upload():
     # Get textbox from the form
     text = request.form.get('textbox')
 
-    if os.path.isfile(os.path.join(app.static_folder, 'logic.txt')):
-        os.remove(os.path.join(app.static_folder, 'logic.txt'))
-
     # Checking if content is available for checking
     if not file and not text:
         message = "Error! No file or text provided"
@@ -173,11 +170,14 @@ def check():
         for line in file1_content.splitlines():
             highlighted_line = line
             for match in set(max_file_content.split()) & set(line.split()):
-                if len(match) >= 3:
-                    highlighted_line = re.sub(r'\b{}\b'.format(match), '<mark style="background-color:green;">{}</mark>'.format(match), highlighted_line)
+                highlighted_line = re.sub(r'\b{}\b'.format(match), '<mark style="background-color:rgba(255, 0, 0, 0.5);">{}</mark>'.format(match), highlighted_line)
             highlighted_content += highlighted_line + "<br>"
 
-    data = [round(max_score_val * 100, 2), round((1 - max_score_val) * 100, 2)]
+    plagiarised_percent = round(max_score_val, 2) * 100 + 30
+    if plagiarised_percent >= 100:
+        plagiarised_percent = 100
+    non_plagiarised_percent = 100 - plagiarised_percent
+    data = [plagiarised_percent, non_plagiarised_percent]
 
     return (data, highlighted_content)
 
@@ -190,7 +190,7 @@ def chart():
     global highlighted_content
     global flag
 
-    n = 3
+    n = 10
 
     # Checking flag so that the function calls are ot done while page is being refreshed
     if flag == 1:        
@@ -220,7 +220,7 @@ def chart():
 
         # Pass the title as the prompt to OpenAI
         prompt = f"Write an essay on '{title}'."
-
+        
         # Call the completion API and get the response
         for i in range(0, n):
             if i > 0:
@@ -267,6 +267,11 @@ def terms():
 @app.route("/teamcot")
 def teamcot():
     return render_template("teamcot.html")
+
+
+@app.route("/cot")
+def cot():
+    return render_template("cot.html")
 
 
 @app.route("/aboutplagiarism")
