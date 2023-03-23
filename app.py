@@ -192,7 +192,7 @@ def chart():
     global highlighted_content
     global flag
 
-    n = 10
+    n = 2
 
     # Checking flag so that the function calls are ot done while page is being refreshed
     if flag == 1:        
